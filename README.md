@@ -21,3 +21,20 @@ touch main.go
 ```bash
 kpt fn source data/pkg-upf | go run *.go
 ```
+
+## Sample `Results` output
+
+```yaml
+results:
+- message: index 2 not accepted
+  severity: error
+- file:
+    path: dnn.yaml
+  message: not allowed
+  resourceRef:
+    name: internet
+    apiVersion: req.nephio.org/v1alpha1
+    kind: DataNetworkName
+  severity: error
+
+```
