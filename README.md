@@ -36,5 +36,45 @@ results:
     apiVersion: req.nephio.org/v1alpha1
     kind: DataNetworkName
   severity: error
+```
+
+## Sample output of using KubeObject methods
+
+```yaml
+------------- Check KubeObject functions -------------
+fn.KubeObject implements a lot of getters / setters / other functions, e.g.
+        GetAPIVersion: kpt.dev/v1
+        GetKind: Kptfile
+        IsLocalConfig: true
+-------
+        GetAPIVersion: req.nephio.org/v1alpha1
+        GetKind: Capacity
+        IsLocalConfig: true
+-------
+        GetAPIVersion: infra.nephio.org/v1alpha1
+        GetKind: ClusterContext
+        IsLocalConfig: true
+-------
+        GetAPIVersion: req.nephio.org/v1alpha1
+        GetKind: DataNetworkName
+        IsLocalConfig: true
+-------
+        GetAPIVersion: req.nephio.org/v1alpha1
+        GetKind: Interface
+        IsLocalConfig: true
+-------
+        GetAPIVersion: req.nephio.org/v1alpha1
+        GetKind: Interface
+        IsLocalConfig: true
+-------
+        GetAPIVersion: req.nephio.org/v1alpha1
+        GetKind: Interface
+        IsLocalConfig: true
+-------
+        GetAPIVersion: v1
+        GetKind: ConfigMap
+        IsLocalConfig: true
+-------
+------------------------------------------------------
 
 ```
