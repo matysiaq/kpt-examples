@@ -76,5 +76,31 @@ fn.KubeObject implements a lot of getters / setters / other functions, e.g.
         IsLocalConfig: true
 -------
 ------------------------------------------------------
+```
 
+## Sample output while accessing Nested Fields in the Resource
+
+```
+Accessed pool of DataNetworkName [name=internet]: [pool1, true, <nil>]
+
+Accessed values of Interface [name=n3]: [vpc-ran, true, <nil>]
+
+Accessed values of Interface [name=n4]: [vpc-internal, true, <nil>]
+
+Accessed values of Interface [name=n6]: [vpc-internet, true, <nil>]
+```
+
+## Accessing specific API Version: best practises
+
+In fact, it's not a good idea to use below syntax
+
+```go
+o.GetAPIVersion() == "req.nephio.org/v1alpha1" && o.GetKind() == "Interface"
+```
+
+we should access the library e.g.
+
+```go
+// The same should be defined for Kind
+apiVersion := corev1.SchemaGroupVersion.Identifier()
 ```
