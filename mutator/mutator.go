@@ -7,9 +7,16 @@ import (
 )
 
 type MutatorCtx struct {
+	ClusterContext bool
 }
 
 func (mc *MutatorCtx) GatherInfo(rl *fn.ResourceList) {
+
+	for _, o := range rl.Items {
+		if o.GetAPIVersion() == "infra.nephio.org/v1alpha1" && o.GetKind() == "ClusterContext" {
+			mc.ClusterContext = true
+		}
+	}
 
 	// Test errors appending to the Results array
 	for i, item := range rl.Items {
@@ -62,7 +69,17 @@ func (mc *MutatorCtx) GatherInfo(rl *fn.ResourceList) {
 }
 
 func (mc *MutatorCtx) Mutation(rl *fn.ResourceList) {
-
+	if mc.ClusterContext {
+		// If true proceed with mutation, otherwise don't
+		for _, o := range rl.Items {
+			if o.GetAPIVersion() == "infra.nephio.org/v1alpha1" && o.GetKind() == "ClusterContext" {
+				err := o.SetNestedString("eth0", "spec", "cniConfig", "masterInterface")
+				if err != nil {
+					rl.Results = append(rl.Results, fn.ErrorConfigObjectResult(err, o))
+				}
+			}
+		}
+	}
 }
 
 func Run(rl *fn.ResourceList) (bool, error) {
@@ -72,6 +89,9 @@ func Run(rl *fn.ResourceList) (bool, error) {
 	mc.GatherInfo(rl)
 
 	mc.Mutation(rl)
+
+	// Test if mutation worked
+	fmt.Println(rl.Items)
 
 	return true, nil
 }
